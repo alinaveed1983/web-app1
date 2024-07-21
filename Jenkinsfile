@@ -104,11 +104,22 @@ pipeline {
             }
         }
 
+        stage('Deploy to Kubernetes') {
+            when { expression { params.action == 'create' } }
+            steps {
+                script {
+                    kubectlApply('kubernetes/deployment.yaml')
+                    kubectlApply('kubernetes/service.yaml')
+                }
+            }
+        }
+
         stage('Cleanup Deployments') {
             when { expression { params.action == 'delete' } }
             steps {
                 script {
-                    kubectlDeleteDeployment('web-application-deployment.yaml')
+                    kubectlDeleteDeployment('kubernetes/deployment.yaml')
+                    kubectlDeleteService('kubernetes/service.yaml')
                 }
             }
         }
