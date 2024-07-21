@@ -9,33 +9,19 @@ A simple web application with a drop-down menu to display country codes.
 - Docker
 - Kubernetes cluster
 
-# Repository Structure:
+## System Requirements:
+To deploy our project on AWS EC2 using Ubuntu, we will need to install several tools and set up our environment accordingly. Here's a breakdown of what we need
 
-/web-application
-|-- Dockerfile
-|-- Jenkinsfile
-|-- pom.xml
-|-- README.md
-|-- kubernetes
-|   |-- deployment.yaml
-|   |-- service.yaml
-|-- src
-|   |-- main
-|       |-- java
-|           |-- com
-|               |-- example
-|                   |-- Application.java
-|   |-- resources
-|       |-- templates
-|           |-- index.html
-|       |-- static
-|           |-- css
-|           |-- js
+1.	Jenkins: For automating the CI/CD pipeline.
+2.	Maven (mvn): For building the Java application.
+3.	SonarQube: For static code analysis.
+4.	Docker: For containerizing the application.
+5.	DockerHub : For pushing the docker image into dockehub.
+6.	Minikube: For running a local Kubernetes cluster (if needed).
 
-## Setup
 
-### Clone the Repository
-```bash
-git clone https://github.com/praveen1994dec/Java_app_3.0.git
-cd Java_app_3.0
+## Github repos:
+https://github.com/alinaveed1983/web-app1.git
+https://github.com/alinaveed1983/jenkins_shared_lib.git
+
 
