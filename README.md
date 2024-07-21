@@ -21,7 +21,8 @@ To deploy our project on AWS EC2 using Ubuntu, we will need to install several t
 
 
 ## Github repos:
-https://github.com/alinaveed1983/web-app1.git
-https://github.com/alinaveed1983/jenkins_shared_lib.git
+1.	https://github.com/alinaveed1983/web-app1.git
+
+2.	https://github.com/alinaveed1983/jenkins_shared_lib.git
 
 
