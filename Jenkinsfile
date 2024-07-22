@@ -108,8 +108,8 @@ pipeline {
             when { expression { params.action == 'create' } }
             steps {
                 script {
-                    kubectlApply('kubernetes/deployment.yaml')
-                    kubectlApply('kubernetes/service.yaml')
+                    sh 'kubectl apply -f kubernetes/deployment.yaml --v=9'
+                    sh 'kubectl apply -f kubernetes/service.yaml --v=9'
                 }
             }
         }
@@ -118,8 +118,8 @@ pipeline {
             when { expression { params.action == 'delete' } }
             steps {
                 script {
-                    kubectlDeleteDeployment('kubernetes/deployment.yaml')
-                    kubectlDeleteService('kubernetes/service.yaml')
+                    sh 'kubectl delete -f kubernetes/deployment.yaml --v=9'
+                    sh 'kubectl delete -f kubernetes/service.yaml --v=9'
                 }
             }
         }
