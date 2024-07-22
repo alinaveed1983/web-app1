@@ -108,8 +108,20 @@ pipeline {
             when { expression { params.action == 'create' } }
             steps {
                 script {
-                    kubectlApply('kubernetes/deployment.yaml')
-                    kubectlApply('kubernetes/service.yaml')
+                    withKubeConfig([credentialsId: 'kubeconfig-credentials']) {
+                        sh 'kubectl apply -f kubernetes/deployment.yaml'
+                        sh 'kubectl apply -f kubernetes/service.yaml'
+                    }
+                }
+            }
+            post {
+                failure {
+                    script {
+                        echo "Deployment to Kubernetes failed. Collecting logs..."
+                        sh 'kubectl get pods --all-namespaces'
+                        sh 'kubectl describe pods'
+                        sh 'kubectl describe services'
+                    }
                 }
             }
         }
@@ -118,8 +130,10 @@ pipeline {
             when { expression { params.action == 'delete' } }
             steps {
                 script {
-                    kubectlDeleteDeployment('kubernetes/deployment.yaml')
-                    kubectlDeleteService('kubernetes/service.yaml')
+                    withKubeConfig([credentialsId: 'kubeconfig-credentials']) {
+                        sh 'kubectl delete -f kubernetes/deployment.yaml'
+                        sh 'kubectl delete -f kubernetes/service.yaml'
+                    }
                 }
             }
         }
