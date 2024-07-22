@@ -11,7 +11,7 @@ pipeline {
     }
 
     environment {
-        KUBECONFIG_CREDENTIALS_ID = 'kubeconfig-credentials'  // Use the ID you provided in Jenkins
+        K8S_SA_TOKEN = credentials('k8s-sa-token')  // Use the ID you provided in Jenkins
     }
 
     stages {
@@ -112,7 +112,29 @@ pipeline {
             when { expression { params.action == 'create' } }
             steps {
                 script {
-                    withKubeConfig([credentialsId: env.KUBECONFIG_CREDENTIALS_ID]) {
+                    withEnv(["KUBECONFIG=/tmp/kubeconfig"]) {
+                        sh '''
+                        echo "
+                        apiVersion: v1
+                        kind: Config
+                        clusters:
+                        - cluster:
+                            certificate-authority: /root/.minikube/ca.crt
+                            server: https://192.168.49.2:8443
+                          name: minikube
+                        contexts:
+                        - context:
+                            cluster: minikube
+                            namespace: default
+                            user: minikube
+                          name: minikube
+                        current-context: minikube
+                        users:
+                        - name: minikube
+                          user:
+                            token: ${K8S_SA_TOKEN}
+                        " > /tmp/kubeconfig
+                        '''
                         sh 'kubectl apply -f kubernetes/deployment.yaml'
                         sh 'kubectl apply -f kubernetes/service.yaml'
                     }
@@ -134,7 +156,29 @@ pipeline {
             when { expression { params.action == 'delete' } }
             steps {
                 script {
-                    withKubeConfig([credentialsId: env.KUBECONFIG_CREDENTIALS_ID]) {
+                    withEnv(["KUBECONFIG=/tmp/kubeconfig"]) {
+                        sh '''
+                        echo "
+                        apiVersion: v1
+                        kind: Config
+                        clusters:
+                        - cluster:
+                            certificate-authority: /root/.minikube/ca.crt
+                            server: https://192.168.49.2:8443
+                          name: minikube
+                        contexts:
+                        - context:
+                            cluster: minikube
+                            namespace: default
+                            user: minikube
+                          name: minikube
+                        current-context: minikube
+                        users:
+                        - name: minikube
+                          user:
+                            token: ${K8S_SA_TOKEN}
+                        " > /tmp/kubeconfig
+                        '''
                         sh 'kubectl delete -f kubernetes/deployment.yaml'
                         sh 'kubectl delete -f kubernetes/service.yaml'
                     }
