@@ -10,6 +10,10 @@ pipeline {
         string(name: 'DockerHubUser', description: "DockerHub username", defaultValue: 'alinaveed1983')
     }
 
+    environment {
+        KUBECONFIG_CREDENTIALS_ID = 'kubeconfig-credentials'  // Use the ID you provided in Jenkins
+    }
+
     stages {
         stage('Git Checkout') {
             when { expression { params.action == 'create' } }
@@ -108,7 +112,7 @@ pipeline {
             when { expression { params.action == 'create' } }
             steps {
                 script {
-                    withKubeConfig([credentialsId: 'kubeconfig-credentials']) {
+                    withKubeConfig([credentialsId: env.KUBECONFIG_CREDENTIALS_ID]) {
                         sh 'kubectl apply -f kubernetes/deployment.yaml'
                         sh 'kubectl apply -f kubernetes/service.yaml'
                     }
@@ -130,7 +134,7 @@ pipeline {
             when { expression { params.action == 'delete' } }
             steps {
                 script {
-                    withKubeConfig([credentialsId: 'kubeconfig-credentials']) {
+                    withKubeConfig([credentialsId: env.KUBECONFIG_CREDENTIALS_ID]) {
                         sh 'kubectl delete -f kubernetes/deployment.yaml'
                         sh 'kubectl delete -f kubernetes/service.yaml'
                     }
