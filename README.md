@@ -3,12 +3,6 @@
 ## Description
 A simple web application with a drop-down menu to display country codes.
 
-## Prerequisites
-- Java 8
-- Maven
-- Docker
-- Kubernetes cluster
-
 ## System Requirements:
 To deploy our project on AWS EC2 using Ubuntu, we will need to install several tools and set up our environment accordingly. Here's a breakdown of what we need
 
