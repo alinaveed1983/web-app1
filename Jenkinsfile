@@ -10,6 +10,11 @@ pipeline {
         string(name: 'DockerHubUser', description: "DockerHub username", defaultValue: 'alinaveed1983')
     }
 
+    environment {
+        // This is where you set the environment variable to use the secret
+        KUBECONFIG = credentials('mykubeconfig')
+    }
+
     stages {
         stage('Git Checkout') {
             when { expression { params.action == 'create' } }
@@ -108,8 +113,8 @@ pipeline {
             when { expression { params.action == 'create' } }
             steps {
                 script {
-                    sh 'kubectl apply -f kubernetes/deployment.yaml --v=9'
-                    sh 'kubectl apply -f kubernetes/service.yaml --v=9'
+                    sh 'kubectl apply -f kubernetes/deployment.yaml --validate=false --v=9'
+                    sh 'kubectl apply -f kubernetes/service.yaml --validate=false --v=9'
                 }
             }
         }
