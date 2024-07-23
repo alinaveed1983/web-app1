@@ -4,24 +4,8 @@
 A simple web application with a drop-down menu to display country codes.
 
 ## Repository Structure
-|-- Dockerfile
-|-- Jenkinsfile
-|-- pom.xml
-|-- README.md
-|-- kubernetes
-|   |-- deployment.yaml
-|   |-- service.yaml
-|-- src
-|   |-- main
-|       |-- java
-|           |-- com
-|               |-- example
-|                   |-- Application.java
-|   |-- resources
-|       |-- templates
-|           |-- index.html
-|       |-- static
-|           |-- script.jss
+![WINWORD_0zbS4P8pmO](https://github.com/user-attachments/assets/46c0ddca-e5bb-4665-8807-082649ef3bb1)
+
 
 ## System Requirements:
 To deploy our project on AWS EC2 using Ubuntu, we will need to install several tools and set up our environment accordingly. Here's a breakdown of what we need
