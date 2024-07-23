@@ -113,8 +113,7 @@ pipeline {
             when { expression { params.action == 'create' } }
             steps {
                 script {
-                    sh 'kubectl apply -f kubernetes/deployment.yaml --validate=false --v=9'
-                    sh 'kubectl apply -f kubernetes/service.yaml --validate=false --v=9'
+                    sh 'kubectl apply -f kubernetes/web-deploy.yaml --validate=false --v=9'
                 }
             }
         }
@@ -123,8 +122,7 @@ pipeline {
             when { expression { params.action == 'delete' } }
             steps {
                 script {
-                    sh 'kubectl delete -f kubernetes/deployment.yaml --v=9'
-                    sh 'kubectl delete -f kubernetes/service.yaml --v=9'
+                    sh 'kubectl delete -f kubernetes/web-deploy.yaml --v=9'
                 }
             }
         }
